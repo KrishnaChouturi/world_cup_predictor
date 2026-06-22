@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Cup 2026 Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header class="hero">
+    <span class="eyebrow">Bracket Simulator</span>
+    <h1>32 teams.<br>One <span>trophy.</span></h1>
+    <p>Seed every matchup, run thousands of simulated outcomes, and see exactly who's favored to lift the cup.</p>
+  </header>
+
+  <div class="process">
+    <div class="process-step">
+      <span class="num">01</span>
+      <div><h4>Build</h4><p>Assign a team to all 32 slots across the bracket.</p></div>
+    </div>
+    <div class="process-step">
+      <span class="num">02</span>
+      <div><h4>Simulate</h4><p>The engine plays out every round, thousands of times over.</p></div>
+    </div>
+    <div class="process-step">
+      <span class="num">03</span>
+      <div><h4>Reveal</h4><p>See win odds for every team at every stage of the tournament.</p></div>
+    </div>
+  </div>
+
+  <main>
+    <section id="bracket-section">
+      <div class="section-head">
+        <h2>Round of 32 — <em>build your bracket</em></h2>
+        <span class="hint">Select teams in matchup order. Position 1 plays Position 2, etc.</span>
+      </div>
+
+      <div id="bracket-grid">
+        <div class="bracket-side">
+          <h3>Bracket A</h3>
+          {% for i in range(8) %}
+          <div class="matchup">
+            <span class="matchup-number">M{{ '%02d'|format(i + 1) }}</span>
+            <select class="team-select" id="team-{{ i*2 }}">
+              <option value="">Select team</option>
+              {% for team in teams %}
+              <option value="{{ team }}">{{ team }}</option>
+              {% endfor %}
+            </select>
+            <span class="vs">VS</span>
+            <select class="team-select" id="team-{{ i*2 + 1 }}">
+              <option value="">Select team</option>
+              {% for team in teams %}
+              <option value="{{ team }}">{{ team }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="bracket-side">
+          <h3>Bracket B</h3>
+          {% for i in range(8, 16) %}
+          <div class="matchup">
+            <span class="matchup-number">M{{ '%02d'|format(i + 1) }}</span>
+            <select class="team-select" id="team-{{ i*2 }}">
+              <option value="">Select team</option>
+              {% for team in teams %}
+              <option value="{{ team }}">{{ team }}</option>
+              {% endfor %}
+            </select>
+            <span class="vs">VS</span>
+            <select class="team-select" id="team-{{ i*2 + 1 }}">
+              <option value="">Select team</option>
+              {% for team in teams %}
+              <option value="{{ team }}">{{ team }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="randomize-btn" type="button" onclick="randomizeBracket()">Randomize bracket</button>
+        <button id="simulate-btn" onclick="runSimulation()">▶ Run Simulation</button>
+      </div>
+    </section>
+
+    <section id="results-section">
+      <div class="champion-card">
+        <div class="icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0b429" stroke-width="1.6">
+            <path d="M7 3h10v4a5 5 0 0 1-10 0V3z"/>
+            <path d="M7 5H4a3 3 0 0 0 3 5"/>
+            <path d="M17 5h3a3 3 0 0 1-3 5"/>
+            <path d="M12 12v4M9 20h6M9 16h6v4H9z"/>
+          </svg>
+        </div>
+        <span class="eyebrow">Projected champion</span>
+        <h3 id="champion-name">—</h3>
+        <p class="odds"><strong id="champion-odds">—</strong> chance to win it all</p>
+      </div>
+
+      <div class="chart-container">
+        <h3>Win probability by team</h3>
+        <canvas id="winChart" height="110"></canvas>
+      </div>
+
+      <div class="table-container">
+        <h3>Round-by-round probabilities</h3>
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>R16</th>
+              <th>QF</th>
+              <th>SF</th>
+              <th>Final</th>
+              <th>Winner</th>
+            </tr>
+          </thead>
+          <tbody id="results-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>Predictions are simulated estimates, not betting advice.</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
