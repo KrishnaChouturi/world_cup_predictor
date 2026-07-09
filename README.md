@@ -1,12 +1,12 @@
 #  World Cup Knockout Predictor & Monte Carlo Simulator
 
-This repository contains an end-to-end predictive analytics framework designed for the World Cup knockout stages. Rather than using static brackets, the model implements a custom Team Strength Rating (TSR) engine alongside a 10,000-iteration Monte Carlo simulation to project the probability of each team advancing through every tournament round.---
+This repository contains an end-to-end predictive analytics framework designed for the World Cup knockout stages. Rather than using static brackets, the model implements a custom Team Strength Rating (TSR) engine alongside a 10,000-iteration Monte Carlo simulation to project the probability of each team advancing through every tournament round.
 
 ##  Project Overview
 
 This architecture replaces traditional tournament brackets with a dynamic, data-driven assessment of team quality. By consolidating match performance data, historical strength indicators, and real-time betting market sentiment, the pipeline establishes a standardized power rating for all 32 competing nations to simulate potential tournament paths.
 ### Core Features
-* ****Multi-Factor Rating Engine:** Integrates forward-looking statistics (xG differential), lagging metrics (Points Per Game), schedule context (Strength of Schedule), and consensus market evaluation (implied betting probabilities).
+* **Multi-Factor Rating Engine:** Integrates forward-looking statistics (xG differential), lagging metrics (Points Per Game), schedule context (Strength of Schedule), and consensus market evaluation (implied betting probabilities).
 * **Monte Carlo Simulation Engine:** Executes 10,000+ single-elimination tournament runs powered by a calibrated logistic distribution function.
 * **Interactive Dashboard:** A front-end interface featuring a dynamic bracket tree, a sorting-friendly matrix view, and modular team profiles for deep-dive analysis.
 
